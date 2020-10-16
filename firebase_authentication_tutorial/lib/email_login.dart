@@ -37,8 +37,7 @@ class _EmailLogInState extends State<EmailLogIn> {
                   validator: (value) {
                     if (value.isEmpty) {
                       return 'Enter Email Address';
-                    }
-                    else if(!value.contains('@')){
+                    } else if (!value.contains('@')) {
                       return 'Please enter a valid email address!';
                     }
                     return null;

@@ -13,7 +13,7 @@ class SecondPage extends StatefulWidget {
 }
 
 class _SecondPageState extends State<SecondPage> {
-  final Firestore fb = Firestore.instance;
+  final FirebaseFirestore fb = FirebaseFirestore.instance;
   File _image;
 
   @override
@@ -38,14 +38,13 @@ class _SecondPageState extends State<SecondPage> {
               if (snapshot.connectionState == ConnectionState.done) {
                 return ListView.builder(
                     shrinkWrap: true,
-                    itemCount: snapshot.data.documents.length,
+                    itemCount: snapshot.data.docs.length,
                     itemBuilder: (BuildContext context, int index) {
                       return ListTile(
                         contentPadding: EdgeInsets.all(8.0),
-                        title:
-                            Text(snapshot.data.documents[index].data["name"]),
+                        title: Text(snapshot.data.docs[index].data()["name"]),
                         leading: Image.network(
-                            snapshot.data.documents[index].data["url"],
+                            snapshot.data.docs[index].data()["url"],
                             fit: BoxFit.fill),
                       );
                     });
@@ -88,6 +87,6 @@ class _SecondPageState extends State<SecondPage> {
   }
 
   Future<QuerySnapshot> getImages() {
-    return fb.collection("images").getDocuments();
+    return fb.collection("images").get();
   }
 }
