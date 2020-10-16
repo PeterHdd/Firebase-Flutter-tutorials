@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
-import 'main.dart';
+import 'signup.dart';
 
 class Home extends StatelessWidget {
   Home({this.uid});
@@ -23,10 +23,10 @@ class Home extends StatelessWidget {
               onPressed: () {
                 FirebaseAuth auth = FirebaseAuth.instance;
                 auth.signOut().then((res) {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => MyApp()),
-                  );
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => SignUp()),
+                      (Route<dynamic> route) => false);
                 });
               },
             )
