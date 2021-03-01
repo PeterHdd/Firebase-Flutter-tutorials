@@ -15,6 +15,9 @@ class SecondPage extends StatefulWidget {
 class _SecondPageState extends State<SecondPage> {
   final FirebaseFirestore fb = FirebaseFirestore.instance;
   File _image;
+  bool isLoading = false;
+  bool isRetrieved = false;
+  QuerySnapshot cachedResult;
 
   @override
   void initState() {
@@ -32,28 +35,35 @@ class _SecondPageState extends State<SecondPage> {
       body: Container(
         padding: EdgeInsets.all(10.0),
         child: Column(children: <Widget>[
-          FutureBuilder(
-            future: getImages(),
-            builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                return ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: snapshot.data.docs.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return ListTile(
-                        contentPadding: EdgeInsets.all(8.0),
-                        title: Text(snapshot.data.docs[index].data()["name"]),
-                        leading: Image.network(
-                            snapshot.data.docs[index].data()["url"],
-                            fit: BoxFit.fill),
-                      );
-                    });
-              } else if (snapshot.connectionState == ConnectionState.none) {
-                return Text("No data");
-              }
-              return CircularProgressIndicator();
-            },
-          ),
+          !isRetrieved
+              ? FutureBuilder(
+                  future: getImages(),
+                  builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      print("hi");
+                      isRetrieved = true;
+                      cachedResult = snapshot.data;
+                      return ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: snapshot.data.docs.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return ListTile(
+                              contentPadding: EdgeInsets.all(8.0),
+                              title: Text(
+                                  snapshot.data.docs[index].data()["name"]),
+                              leading: Image.network(
+                                  snapshot.data.docs[index].data()["url"],
+                                  fit: BoxFit.fill),
+                            );
+                          });
+                    } else if (snapshot.connectionState ==
+                        ConnectionState.none) {
+                      return Text("No data");
+                    }
+                    return CircularProgressIndicator();
+                  },
+                )
+              : displayCachedList(), /// TODO: cache images correctly    
           RaisedButton(child: Text("Pick Image"), onPressed: getImage),
           _image == null
               ? Text('No image selected.')
@@ -61,18 +71,28 @@ class _SecondPageState extends State<SecondPage> {
                   _image,
                   height: 300,
                 ),
-          RaisedButton(
-              child: Text("Save Image"),
-              onPressed: () async {
-                if (_image != null) {
-                  StorageReference ref = FirebaseStorage.instance.ref();
-                  StorageTaskSnapshot addImg =
-                      await ref.child("image/img").putFile(_image).onComplete;
-                  if (addImg.error == null) {
-                    print("added to Firebase Storage");
-                  }
-                }
-              }),
+          !isLoading
+              ? RaisedButton(
+                  child: Text("Save Image"),
+                  onPressed: () async {
+                    if (_image != null) {
+                      setState(() {
+                        this.isLoading = true;
+                      });
+                      StorageReference ref = FirebaseStorage.instance.ref();
+                      StorageTaskSnapshot addImg = await ref
+                          .child("image/img")
+                          .putFile(_image)
+                          .onComplete;
+                      if (addImg.error == null) {
+                        setState(() {
+                          this.isLoading = false;
+                        });
+                        print("added to Firebase Storage");
+                      }
+                    }
+                  })
+              : CircularProgressIndicator(),
         ]),
       ),
     ));
@@ -88,5 +108,20 @@ class _SecondPageState extends State<SecondPage> {
 
   Future<QuerySnapshot> getImages() {
     return fb.collection("images").get();
+  }
+
+  ListView displayCachedList() {
+    return ListView.builder(
+        shrinkWrap: true,
+        itemCount: cachedResult.docs.length,
+        itemBuilder: (BuildContext context, int index) {
+          print(cachedResult.docs[index].data()["url"]);
+          return ListTile(
+            contentPadding: EdgeInsets.all(8.0),
+            title: Text(cachedResult.docs[index].data()["name"]),
+            leading: Image.network(cachedResult.docs[index].data()["url"],
+                fit: BoxFit.fill),
+          );
+        });
   }
 }
