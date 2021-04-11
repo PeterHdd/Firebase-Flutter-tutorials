@@ -28,9 +28,9 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage({Key? key, this.title}) : super(key: key);
 
-  final String title;
+  final String? title;
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -38,10 +38,10 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   var storage = FirebaseStorage.instance;
-  List<AssetImage> listOfImage;
+  late List<AssetImage> listOfImage;
   bool clicked = false;
-  List<String> listOfStr = List();
-  String images;
+  List<String?> listOfStr = [];
+  String? images;
   bool isLoading = false;
 
   @override
@@ -54,7 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(widget.title!),
       ),
       body: Container(
         child: Column(
@@ -127,14 +127,14 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             Builder(builder: (context) {
-              return RaisedButton(
+              return ElevatedButton(
                   child: Text("Save Images"),
                   onPressed: () {
                     setState(() {
                       this.isLoading = true;
                     });
                     listOfStr.forEach((img) async {
-                      String imageName = img
+                      String imageName = img!
                           .substring(img.lastIndexOf("/"), img.lastIndexOf("."))
                           .replaceAll("/", "");
 
@@ -145,12 +145,11 @@ class _MyHomePageState extends State<MyHomePage> {
                           File('${systemTempDir.path}/$imageName.jpeg');
                       await file.writeAsBytes(byteData.buffer.asUint8List(
                           byteData.offsetInBytes, byteData.lengthInBytes));
-                      StorageTaskSnapshot snapshot = await storage
+                      TaskSnapshot snapshot = await storage
                           .ref()
                           .child("images/$imageName")
-                          .putFile(file)
-                          .onComplete;
-                      if (snapshot.error == null) {
+                          .putFile(file);
+                      if (snapshot.state == TaskState.success) {
                         final String downloadUrl =
                             await snapshot.ref.getDownloadURL();
                         await FirebaseFirestore.instance
@@ -161,16 +160,16 @@ class _MyHomePageState extends State<MyHomePage> {
                         });
                         final snackBar =
                             SnackBar(content: Text('Yay! Success'));
-                        Scaffold.of(context).showSnackBar(snackBar);
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       } else {
                         print(
-                            'Error from image repo ${snapshot.error.toString()}');
+                            'Error from image repo ${snapshot.state.toString()}');
                         throw ('This file is not an image');
                       }
                     });
                   });
             }),
-            RaisedButton(
+            ElevatedButton(
               child: Text("Get Images"),
               onPressed: () {
                 Navigator.push(
@@ -189,7 +188,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void getImages() {
-    listOfImage = List();
+    listOfImage = [];
     for (int i = 0; i < 6; i++) {
       listOfImage.add(
           AssetImage('assets/images/travelimage' + i.toString() + '.jpeg'));

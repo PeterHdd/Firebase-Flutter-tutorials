@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class SecondPage extends StatefulWidget {
-  SecondPage({Key key}) : super(key: key);
+  SecondPage({Key? key}) : super(key: key);
 
   @override
   _SecondPageState createState() => _SecondPageState();
@@ -14,10 +14,10 @@ class SecondPage extends StatefulWidget {
 
 class _SecondPageState extends State<SecondPage> {
   final FirebaseFirestore fb = FirebaseFirestore.instance;
-  File _image;
+  File? _image;
   bool isLoading = false;
   bool isRetrieved = false;
-  QuerySnapshot cachedResult;
+  QuerySnapshot? cachedResult;
 
   @override
   void initState() {
@@ -45,14 +45,14 @@ class _SecondPageState extends State<SecondPage> {
                       cachedResult = snapshot.data;
                       return ListView.builder(
                           shrinkWrap: true,
-                          itemCount: snapshot.data.docs.length,
+                          itemCount: snapshot.data!.docs.length,
                           itemBuilder: (BuildContext context, int index) {
                             return ListTile(
                               contentPadding: EdgeInsets.all(8.0),
                               title: Text(
-                                  snapshot.data.docs[index].data()["name"]),
+                                  snapshot.data!.docs[index].data()["name"]),
                               leading: Image.network(
-                                  snapshot.data.docs[index].data()["url"],
+                                  snapshot.data!.docs[index].data()["url"],
                                   fit: BoxFit.fill),
                             );
                           });
@@ -64,27 +64,26 @@ class _SecondPageState extends State<SecondPage> {
                   },
                 )
               : displayCachedList(), /// TODO: cache images correctly    
-          RaisedButton(child: Text("Pick Image"), onPressed: getImage),
+          ElevatedButton(child: Text("Pick Image"), onPressed: getImage),
           _image == null
               ? Text('No image selected.')
               : Image.file(
-                  _image,
+                  _image!,
                   height: 300,
                 ),
           !isLoading
-              ? RaisedButton(
+              ? ElevatedButton(
                   child: Text("Save Image"),
                   onPressed: () async {
                     if (_image != null) {
                       setState(() {
                         this.isLoading = true;
-                      });
-                      StorageReference ref = FirebaseStorage.instance.ref();
-                      StorageTaskSnapshot addImg = await ref
+                      }); 
+                      Reference ref = FirebaseStorage.instance.ref();
+                      TaskSnapshot addImg = await ref
                           .child("image/img")
-                          .putFile(_image)
-                          .onComplete;
-                      if (addImg.error == null) {
+                          .putFile(_image!);
+                      if (addImg.state == TaskState.success) {
                         setState(() {
                           this.isLoading = false;
                         });
@@ -99,10 +98,11 @@ class _SecondPageState extends State<SecondPage> {
   }
 
   Future getImage() async {
-    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    final _picker = ImagePicker();
+    var image = await _picker.getImage(source: ImageSource.gallery);
 
     setState(() {
-      _image = image;
+      _image = File(image!.path);
     });
   }
 
@@ -113,13 +113,13 @@ class _SecondPageState extends State<SecondPage> {
   ListView displayCachedList() {
     return ListView.builder(
         shrinkWrap: true,
-        itemCount: cachedResult.docs.length,
+        itemCount: cachedResult!.docs.length,
         itemBuilder: (BuildContext context, int index) {
-          print(cachedResult.docs[index].data()["url"]);
+          print(cachedResult!.docs[index].data()["url"]);
           return ListTile(
             contentPadding: EdgeInsets.all(8.0),
-            title: Text(cachedResult.docs[index].data()["name"]),
-            leading: Image.network(cachedResult.docs[index].data()["url"],
+            title: Text(cachedResult!.docs[index].data()["name"]),
+            leading: Image.network(cachedResult!.docs[index].data()["url"],
                 fit: BoxFit.fill),
           );
         });
