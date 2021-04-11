@@ -152,8 +152,7 @@ class _RegisterPetState extends State<RegisterPet> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  RaisedButton(
-                    color: Colors.lightBlue,
+                  ElevatedButton(
                     onPressed: () {
                       if (_formKey.currentState.validate()) {
                         dbRef.push().set({
@@ -161,20 +160,19 @@ class _RegisterPetState extends State<RegisterPet> {
                           "age": ageController.text,
                           "type": dropdownValue
                         }).then((_) {
-                          Scaffold.of(context).showSnackBar(
+                          ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(content: Text('Successfully Added')));
                           ageController.clear();
                           nameController.clear();
                         }).catchError((onError) {
-                          Scaffold.of(context)
+                          ScaffoldMessenger.of(context)
                               .showSnackBar(SnackBar(content: Text(onError)));
                         });
                       }
                     },
                     child: Text('Submit'),
                   ),
-                  RaisedButton(
-                    color: Colors.amber,
+                  ElevatedButton(
                     onPressed: () {
                       Navigator.push(
                         context,
