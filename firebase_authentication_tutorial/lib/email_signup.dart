@@ -113,8 +113,8 @@ class _EmailSignUpState extends State<EmailSignUp> {
                 padding: EdgeInsets.all(20.0),
                 child: isLoading
                     ? CircularProgressIndicator()
-                    : RaisedButton(
-                        color: Colors.lightBlue,
+                    : ElevatedButton(
+                        style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Colors.lightBlue)),
                         onPressed: () {
                           if (_formKey.currentState.validate()) {
                             setState(() {
@@ -153,7 +153,7 @@ class _EmailSignUpState extends State<EmailSignUp> {
               title: Text("Error"),
               content: Text(err.message),
               actions: [
-                FlatButton(
+                TextButton(
                   child: Text("Ok"),
                   onPressed: () {
                     Navigator.of(context).pop();
