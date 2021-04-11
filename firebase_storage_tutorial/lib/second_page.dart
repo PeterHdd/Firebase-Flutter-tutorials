@@ -40,7 +40,6 @@ class _SecondPageState extends State<SecondPage> {
                   future: getImages(),
                   builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                     if (snapshot.connectionState == ConnectionState.done) {
-                      print("hi");
                       isRetrieved = true;
                       cachedResult = snapshot.data;
                       return ListView.builder(
@@ -63,7 +62,9 @@ class _SecondPageState extends State<SecondPage> {
                     return CircularProgressIndicator();
                   },
                 )
-              : displayCachedList(), /// TODO: cache images correctly    
+              : displayCachedList(),
+
+          /// TODO: cache images correctly
           ElevatedButton(child: Text("Pick Image"), onPressed: getImage),
           _image == null
               ? Text('No image selected.')
@@ -78,11 +79,10 @@ class _SecondPageState extends State<SecondPage> {
                     if (_image != null) {
                       setState(() {
                         this.isLoading = true;
-                      }); 
+                      });
                       Reference ref = FirebaseStorage.instance.ref();
-                      TaskSnapshot addImg = await ref
-                          .child("image/img")
-                          .putFile(_image!);
+                      TaskSnapshot addImg =
+                          await ref.child("image/img").putFile(_image!);
                       if (addImg.state == TaskState.success) {
                         setState(() {
                           this.isLoading = false;
