@@ -2,8 +2,8 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
-  Home({Key key, this.title}) : super(key: key);
-  final String title;
+  Home({Key? key, this.title}) : super(key: key);
+  final String? title;
 
   @override
   _HomeState createState() => _HomeState();
@@ -17,14 +17,14 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(widget.title),
+          title: Text(widget.title!),
         ),
         body: FutureBuilder(
             future: dbRef.once(),
             builder: (context, AsyncSnapshot<DataSnapshot> snapshot) {
               if (snapshot.hasData) {
                 lists.clear();
-                Map<dynamic, dynamic> values = snapshot.data.value;
+                Map<dynamic, dynamic> values = snapshot.data!.value;
                 values.forEach((key, values) {
                   lists.add(values);
                 });

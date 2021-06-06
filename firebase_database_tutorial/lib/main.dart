@@ -25,8 +25,8 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-  final String title;
+  MyHomePage({Key? key, this.title}) : super(key: key);
+  final String? title;
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -37,7 +37,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(widget.title!),
       ),
       body: Center(
           child: SingleChildScrollView(
@@ -58,7 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 class RegisterPet extends StatefulWidget {
-  RegisterPet({Key key}) : super(key: key);
+  RegisterPet({Key? key}) : super(key: key);
 
   @override
   _RegisterPetState createState() => _RegisterPetState();
@@ -67,7 +67,7 @@ class RegisterPet extends StatefulWidget {
 class _RegisterPetState extends State<RegisterPet> {
   final _formKey = GlobalKey<FormState>();
   final listOfPets = ["Cats", "Dogs", "Rabbits"];
-  String dropdownValue = 'Cats';
+  String? dropdownValue = 'Cats';
   final nameController = TextEditingController();
   final ageController = TextEditingController();
   final dbRef = FirebaseDatabase.instance.reference().child("pets");
@@ -90,7 +90,7 @@ class _RegisterPetState extends State<RegisterPet> {
               ),
               // The validator receives the text that the user has entered.
               validator: (value) {
-                if (value.isEmpty) {
+                if (value!.isEmpty) {
                   return 'Enter Pet Name';
                 }
                 return null;
@@ -114,12 +114,12 @@ class _RegisterPetState extends State<RegisterPet> {
                   child: new Text(value),
                 );
               }).toList(),
-              onChanged: (String newValue) {
+              onChanged: (String? newValue) {
                 setState(() {
                   dropdownValue = newValue;
                 });
               },
-              validator: (value) {
+              validator: (dynamic value) {
                 if (value.isEmpty) {
                   return 'Please Select Pet';
                 }
@@ -140,7 +140,7 @@ class _RegisterPetState extends State<RegisterPet> {
               ),
               // The validator receives the text that the user has entered.
               validator: (value) {
-                if (value.isEmpty) {
+                if (value!.isEmpty) {
                   return 'Please Pet Age';
                 }
                 return null;
@@ -154,7 +154,7 @@ class _RegisterPetState extends State<RegisterPet> {
                 children: <Widget>[
                   ElevatedButton(
                     onPressed: () {
-                      if (_formKey.currentState.validate()) {
+                      if (_formKey.currentState!.validate()) {
                         dbRef.push().set({
                           "name": nameController.text,
                           "age": ageController.text,
