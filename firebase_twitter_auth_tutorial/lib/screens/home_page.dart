@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_google_sign_in_tutorial/services/firebase_service.dart';
-import 'package:firebase_google_sign_in_tutorial/utils/constants.dart';
+import 'package:firebase_twitter_auth_tutorial/services/firebase_service.dart';
+import 'package:firebase_twitter_auth_tutorial/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
