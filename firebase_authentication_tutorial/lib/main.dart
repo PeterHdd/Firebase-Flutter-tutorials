@@ -29,8 +29,11 @@ class MyApp extends StatelessWidget {
 class IntroScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    User result = FirebaseAuth.instance.currentUser;
+    User? result = FirebaseAuth.instance.currentUser;
     return new SplashScreen(
+        useLoader: true,
+        loadingTextPadding: EdgeInsets.all(0),
+        loadingText: Text(""),
         navigateAfterSeconds: result != null ? Home(uid: result.uid) : SignUp(),
         seconds: 5,
         title: new Text(

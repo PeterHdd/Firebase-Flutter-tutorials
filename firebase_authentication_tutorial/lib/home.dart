@@ -6,7 +6,7 @@ import 'signup.dart';
 
 class Home extends StatelessWidget {
   Home({this.uid});
-  final String uid;
+  final String? uid;
   final String title = "Home";
 
   @override
@@ -38,8 +38,8 @@ class Home extends StatelessWidget {
 }
 
 class NavigateDrawer extends StatefulWidget {
-  final String uid;
-  NavigateDrawer({Key key, this.uid}) : super(key: key);
+  final String? uid;
+  NavigateDrawer({Key? key, this.uid}) : super(key: key);
   @override
   _NavigateDrawerState createState() => _NavigateDrawerState();
 }
@@ -56,11 +56,11 @@ class _NavigateDrawerState extends State<NavigateDrawer> {
                 future: FirebaseDatabase.instance
                     .reference()
                     .child("Users")
-                    .child(widget.uid)
+                    .child(widget.uid!)
                     .once(),
                 builder: (context, AsyncSnapshot<DataSnapshot> snapshot) {
                   if (snapshot.hasData) {
-                    return Text(snapshot.data.value['email']);
+                    return Text(snapshot.data!.value['email']);
                   } else {
                     return CircularProgressIndicator();
                   }
@@ -69,11 +69,11 @@ class _NavigateDrawerState extends State<NavigateDrawer> {
                 future: FirebaseDatabase.instance
                     .reference()
                     .child("Users")
-                    .child(widget.uid)
+                    .child(widget.uid!)
                     .once(),
                 builder: (context, AsyncSnapshot<DataSnapshot> snapshot) {
                   if (snapshot.hasData) {
-                    return Text(snapshot.data.value['name']);
+                    return Text(snapshot.data!.value['name']);
                   } else {
                     return CircularProgressIndicator();
                   }
