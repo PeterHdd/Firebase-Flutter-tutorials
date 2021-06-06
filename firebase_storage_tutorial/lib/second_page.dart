@@ -17,7 +17,7 @@ class _SecondPageState extends State<SecondPage> {
   File? _image;
   bool isLoading = false;
   bool isRetrieved = false;
-  QuerySnapshot? cachedResult;
+  QuerySnapshot<Map<String,dynamic>>? cachedResult;
 
   @override
   void initState() {
@@ -38,7 +38,7 @@ class _SecondPageState extends State<SecondPage> {
           !isRetrieved
               ? FutureBuilder(
                   future: getImages(),
-                  builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                  builder: (context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
                     if (snapshot.connectionState == ConnectionState.done) {
                       isRetrieved = true;
                       cachedResult = snapshot.data;
@@ -106,7 +106,7 @@ class _SecondPageState extends State<SecondPage> {
     });
   }
 
-  Future<QuerySnapshot> getImages() {
+  Future<QuerySnapshot<Map<String, dynamic>>> getImages() {
     return fb.collection("images").get();
   }
 

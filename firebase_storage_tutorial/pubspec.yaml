@@ -19,11 +19,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  cloud_firestore: ^1.0.4
+  cloud_firestore: ^2.2.1
   cupertino_icons: ^0.1.2
-  firebase_core: ^1.0.3
-  firebase_storage: ^8.0.3
-  image_picker: ^0.7.4
+  firebase_core: ^1.2.1
+  firebase_storage: ^8.1.1
+  image_picker: ^0.8.0+1
 
 dev_dependencies:
   flutter_test:
