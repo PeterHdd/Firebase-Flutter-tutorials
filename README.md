@@ -15,4 +15,4 @@ Support the repository by joining the [stargazers](https://github.com/PeterHdd/F
 
 If you found this project helpful or you learned something from the tutorials and want to thank me, consider buying me a cup of :coffee:
 
-<a href="https://www.buymeacoffee.com/peterhaddad" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+<a href="https://www.buymeacoffee.com/peterhaddad" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" height= "45px" width="174px"></a>
