@@ -68,10 +68,13 @@ class _SecondPageState extends State<SecondPage> {
           ElevatedButton(child: Text("Pick Image"), onPressed: getImage),
           _image == null
               ? Text('No image selected.')
-              : Image.file(
-                  _image!,
-                  height: 300,
-                ),
+              : Expanded(
+                child: Image.file(
+                    _image!,
+                    fit: BoxFit.fill,
+                    // height: 300,
+                  ),
+              ),
           !isLoading
               ? ElevatedButton(
                   child: Text("Save Image"),
@@ -99,7 +102,7 @@ class _SecondPageState extends State<SecondPage> {
 
   Future getImage() async {
     final _picker = ImagePicker();
-    var image = await _picker.getImage(source: ImageSource.gallery);
+    var image = await _picker.pickImage(source: ImageSource.gallery);
 
     setState(() {
       _image = File(image!.path);
