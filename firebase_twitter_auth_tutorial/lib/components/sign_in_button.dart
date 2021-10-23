@@ -3,7 +3,6 @@ import 'package:firebase_twitter_auth_tutorial/services/firebase_service.dart';
 import 'package:firebase_twitter_auth_tutorial/utils/constants.dart';
 import 'package:firebase_twitter_auth_tutorial/utils/resource.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class SignInButton extends StatefulWidget {

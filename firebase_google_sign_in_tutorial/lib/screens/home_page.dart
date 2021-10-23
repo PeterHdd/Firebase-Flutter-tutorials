@@ -36,7 +36,6 @@ class _HomePageState extends State<HomePage> {
               },
             )
           ],
-          backwardsCompatibility: false,
           systemOverlayStyle: SystemUiOverlayStyle(statusBarColor: Colors.blue),
           title: Text("Home"),
         ),

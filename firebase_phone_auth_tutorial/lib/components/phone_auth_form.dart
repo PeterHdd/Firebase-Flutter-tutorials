@@ -29,7 +29,6 @@ class _PhoneAuthFormState extends State<PhoneAuthForm> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(title: Text("Verify OTP"),
-                backwardsCompatibility: false,
           systemOverlayStyle: SystemUiOverlayStyle(statusBarColor: Colors.blue),),
       backgroundColor: Constants.kPrimaryColor,
       body:  Center(

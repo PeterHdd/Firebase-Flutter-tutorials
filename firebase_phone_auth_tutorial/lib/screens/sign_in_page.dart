@@ -1,4 +1,3 @@
-import 'package:firebase_phone_auth_tutorial/components/phone_auth_form.dart';
 import 'package:firebase_phone_auth_tutorial/components/sign_in_button.dart';
 import 'package:firebase_phone_auth_tutorial/utils/constants.dart';
 import 'package:firebase_phone_auth_tutorial/utils/resource.dart';
@@ -9,8 +8,6 @@ class SignInPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    OutlineInputBorder border = OutlineInputBorder(
-        borderSide: BorderSide(color: Constants.kBorderColor, width: 3.0));
     return Scaffold(
         resizeToAvoidBottomInset: true,
         backgroundColor: Constants.kPrimaryColor,
