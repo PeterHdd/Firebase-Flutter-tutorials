@@ -1,3 +1,8 @@
+![discord](https://img.shields.io/discord/902889880965742612?color=blue&logo=discord&style=for-the-badge)
+![followers](https://img.shields.io/github/followers/peterhdd?color=orange&style=for-the-badge)
+![stars](https://img.shields.io/github/stars/peterhdd/firebase-flutter-tutorials?color=green&style=for-the-badge)
+
+
 # Firebase-Flutter Tutorials
 ## Repository Containing Source code for tutorials found here:
 
