@@ -1,6 +1,6 @@
-![discord](https://img.shields.io/discord/902889880965742612?color=blue&logo=discord&style=for-the-badge)
-![followers](https://img.shields.io/github/followers/peterhdd?color=orange&style=for-the-badge)
-![stars](https://img.shields.io/github/stars/peterhdd/firebase-flutter-tutorials?color=green&style=for-the-badge)
+[![discord](https://img.shields.io/badge/Discord-7289DA?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/3t3steGXqN)
+![flutter](https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white)
+![firebase](https://img.shields.io/badge/firebase-ffca28?style=for-the-badge&logo=firebase&logoColor=black)
 
 
 # Firebase-Flutter Tutorials
