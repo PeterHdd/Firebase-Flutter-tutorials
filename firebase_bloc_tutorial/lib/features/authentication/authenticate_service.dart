@@ -18,7 +18,7 @@ class AuthenticationService {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: user.email!,password: user.password!);
-          verifyEmail();
+          await verifyEmail();
       return userCredential;
     } on FirebaseAuthException catch (e) {
       throw FirebaseAuthException(code: e.code, message: e.message);
