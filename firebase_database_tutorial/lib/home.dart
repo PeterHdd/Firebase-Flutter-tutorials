@@ -10,7 +10,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final dbRef = FirebaseDatabase.instance.reference().child("pets");
+  final dbRef = FirebaseDatabase.instance.ref().child("pets");
   List<Map<dynamic, dynamic>> lists = [];
 
   @override
@@ -19,12 +19,12 @@ class _HomeState extends State<Home> {
         appBar: AppBar(
           title: Text(widget.title!),
         ),
-        body: FutureBuilder(
+        body: FutureBuilder<DatabaseEvent>(
             future: dbRef.once(),
-            builder: (context, AsyncSnapshot<DataSnapshot> snapshot) {
+            builder: (context, AsyncSnapshot<DatabaseEvent> snapshot) {
               if (snapshot.hasData) {
                 lists.clear();
-                Map<dynamic, dynamic> values = snapshot.data!.value;
+                Map<dynamic, dynamic> values = snapshot.data!.snapshot.value as Map<dynamic,dynamic>;
                 values.forEach((key, values) {
                   lists.add(values);
                 });

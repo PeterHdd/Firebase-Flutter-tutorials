@@ -70,7 +70,7 @@ class _RegisterPetState extends State<RegisterPet> {
   String? dropdownValue = 'Cats';
   final nameController = TextEditingController();
   final ageController = TextEditingController();
-  final dbRef = FirebaseDatabase.instance.reference().child("pets");
+  final dbRef = FirebaseDatabase.instance.ref().child("pets");
 
   @override
   Widget build(BuildContext context) {
