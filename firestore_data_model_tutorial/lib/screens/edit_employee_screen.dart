@@ -147,9 +147,9 @@ class _EditEmployeeScreenState extends State<EditEmployeeScreen> {
                         ? Center(
                             child: ElevatedButton(
                                 style: ButtonStyle(
-                                    minimumSize: MaterialStateProperty.all(
+                                    minimumSize: WidgetStateProperty.all(
                                         const Size(200, 50)),
-                                    backgroundColor: MaterialStateProperty.all<
+                                    backgroundColor: WidgetStateProperty.all<
                                             Color>(
                                         const Color.fromARGB(255, 83, 80, 80))),
                                 onPressed: (() async {

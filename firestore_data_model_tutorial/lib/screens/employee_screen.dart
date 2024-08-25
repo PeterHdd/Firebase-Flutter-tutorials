@@ -114,7 +114,6 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
                           return 'Please seperate address by comma';
                         }
 
-                        
                         return null;
                       },
                     ),
@@ -141,22 +140,23 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
                         ? Center(
                             child: ElevatedButton(
                                 style: ButtonStyle(
-                                  minimumSize:MaterialStateProperty.all(const Size(200,50)),
-                                    backgroundColor: MaterialStateProperty.all<
+                                    minimumSize: WidgetStateProperty.all(
+                                        const Size(200, 50)),
+                                    backgroundColor: WidgetStateProperty.all<
                                             Color>(
                                         const Color.fromARGB(255, 83, 80, 80))),
                                 onPressed: (() async {
                                   if (_formKey.currentState!.validate()) {
                                     DatabaseService service = DatabaseService();
-                                    List<String> employeeTraits = traitsController.text.split(",");
+                                    List<String> employeeTraits =
+                                        traitsController.text.split(",");
                                     late Address address;
                                     if (addressController.text.contains(",")) {
                                       List<String> fullAddress =
                                           addressController.text.split(",");
                                       address = Address(
                                           streetName: fullAddress[0],
-                                          buildingName:
-                                              fullAddress[1],
+                                          buildingName: fullAddress[1],
                                           cityName: fullAddress[2]);
                                     }
                                     Employee employee = Employee(
@@ -175,7 +175,10 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
                                     });
                                   }
                                 }),
-                                child: const Text("Submit",style: TextStyle(fontSize: 20),)),
+                                child: const Text(
+                                  "Submit",
+                                  style: TextStyle(fontSize: 20),
+                                )),
                           )
                         : const Center(
                             child: CircularProgressIndicator(),

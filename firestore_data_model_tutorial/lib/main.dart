@@ -1,3 +1,4 @@
+import 'package:firestore_data_model_tutorial/firebase_options.dart';
 import 'package:firestore_data_model_tutorial/services/database_service.dart';
 import 'package:firestore_data_model_tutorial/screens/edit_employee_screen.dart';
 import 'package:firestore_data_model_tutorial/screens/employee_screen.dart';
@@ -8,7 +9,7 @@ import 'model/employee.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
 
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const DashboardScreen(title: 'Dashboard'),
         '/add': (context) => const EmployeeScreen(),
-        '/edit' : (context) => const EditEmployeeScreen()
+        '/edit': (context) => const EditEmployeeScreen()
       },
     );
   }
@@ -73,10 +74,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         ),
                     itemBuilder: (context, index) {
                       return Dismissible(
-                        onDismissed: ((direction) async{
-                                await service.deleteEmployee(
-                                retrievedEmployeeList![index].id.toString());
-                             _dismiss();
+                        onDismissed: ((direction) async {
+                          await service.deleteEmployee(
+                              retrievedEmployeeList![index].id.toString());
+                          _dismiss();
                         }),
                         background: Container(
                           decoration: BoxDecoration(
@@ -97,8 +98,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               color: const Color.fromARGB(255, 83, 80, 80),
                               borderRadius: BorderRadius.circular(16.0)),
                           child: ListTile(
-                            onTap:() {
-                                  Navigator.pushNamed(context, "/edit", arguments: retrievedEmployeeList![index]);
+                            onTap: () {
+                              Navigator.pushNamed(context, "/edit",
+                                  arguments: retrievedEmployeeList![index]);
                             },
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8.0),
@@ -116,7 +118,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 return Center(
                   child: ListView(
                     children: const <Widget>[
-                        Align(alignment: AlignmentDirectional.center,
+                      Align(
+                          alignment: AlignmentDirectional.center,
                           child: Text('No data available')),
                     ],
                   ),
@@ -141,16 +144,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Future<void> _refresh() async {
     employeeList = service.retrieveEmployees();
     retrievedEmployeeList = await service.retrieveEmployees();
-    setState(() {
-    });
+    setState(() {});
   }
 
-    void _dismiss() {
-    employeeList =  service.retrieveEmployees();
+  void _dismiss() {
+    employeeList = service.retrieveEmployees();
   }
 
   Future<void> _initRetrieval() async {
-      employeeList = service.retrieveEmployees();
-      retrievedEmployeeList = await service.retrieveEmployees();
+    employeeList = service.retrieveEmployees();
+    retrievedEmployeeList = await service.retrieveEmployees();
   }
 }
