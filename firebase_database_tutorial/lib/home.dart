@@ -24,7 +24,8 @@ class _HomeState extends State<Home> {
             builder: (context, AsyncSnapshot<DatabaseEvent> snapshot) {
               if (snapshot.hasData) {
                 lists.clear();
-                Map<dynamic, dynamic> values = snapshot.data!.snapshot.value as Map<dynamic,dynamic>;
+                Map<dynamic, dynamic> values =
+                    snapshot.data!.snapshot.value as Map<dynamic, dynamic>;
                 values.forEach((key, values) {
                   lists.add(values);
                 });
