@@ -54,26 +54,30 @@ class _NavigateDrawerState extends State<NavigateDrawer> {
           UserAccountsDrawerHeader(
             accountEmail: FutureBuilder(
                 future: FirebaseDatabase.instance
-                    .reference()
+                    .ref()
                     .child("Users")
                     .child(widget.uid!)
                     .once(),
-                builder: (context, AsyncSnapshot<DataSnapshot> snapshot) {
+                builder: (context, AsyncSnapshot<DatabaseEvent> snapshot) {
                   if (snapshot.hasData) {
-                    return Text(snapshot.data!.value['email']);
+                    Map<String, dynamic> data = Map<String, dynamic>.from(
+                        snapshot.data!.snapshot.value as Map);
+                    return Text(data['email'] as String);
                   } else {
                     return CircularProgressIndicator();
                   }
                 }),
             accountName: FutureBuilder(
                 future: FirebaseDatabase.instance
-                    .reference()
+                    .ref()
                     .child("Users")
                     .child(widget.uid!)
                     .once(),
-                builder: (context, AsyncSnapshot<DataSnapshot> snapshot) {
+                builder: (context, AsyncSnapshot<DatabaseEvent> snapshot) {
                   if (snapshot.hasData) {
-                    return Text(snapshot.data!.value['name']);
+                    Map<String, dynamic> data = Map<String, dynamic>.from(
+                        snapshot.data!.snapshot.value as Map);
+                    return Text(data['name'] as String);
                   } else {
                     return CircularProgressIndicator();
                   }

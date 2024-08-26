@@ -13,8 +13,7 @@ class _EmailSignUpState extends State<EmailSignUp> {
   bool isLoading = false;
   final _formKey = GlobalKey<FormState>();
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-  DatabaseReference dbRef =
-      FirebaseDatabase.instance.reference().child("Users");
+  DatabaseReference dbRef = FirebaseDatabase.instance.ref().child("Users");
   TextEditingController emailController = TextEditingController();
   TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -114,7 +113,9 @@ class _EmailSignUpState extends State<EmailSignUp> {
                 child: isLoading
                     ? CircularProgressIndicator()
                     : ElevatedButton(
-                        style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Colors.lightBlue)),
+                        style: ButtonStyle(
+                            backgroundColor: WidgetStateProperty.all<Color>(
+                                Colors.lightBlue)),
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
                             setState(() {
