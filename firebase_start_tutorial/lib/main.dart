@@ -1,12 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_start_tutorial/firebase_options.dart';
 import 'package:flutter/material.dart';
-
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(MyApp());
 }
 
@@ -40,7 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final ref = fb.reference();
+    final ref = fb.ref();
     return Scaffold(
         appBar: AppBar(
           title: Text(widget.title!),
@@ -64,11 +63,11 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             ElevatedButton(
               onPressed: () {
-                ref.child("Name").once().then((DataSnapshot data){
-                  print(data.value);
-                  print(data.key);
+                ref.child("Name").once().then((DatabaseEvent data) {
+                  print(data.snapshot.key);
+                  print(data.snapshot.value);
                   setState(() {
-                    retrievedName = data.value;
+                    retrievedName = data.snapshot.value;
                   });
                 });
               },
