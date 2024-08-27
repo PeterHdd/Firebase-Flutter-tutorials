@@ -45,8 +45,8 @@ class _SignInButtonState extends State<SignInButton> {
               ),
               style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateProperty.all<Color>(Constants.kGreyColor),
-                  side: MaterialStateProperty.all<BorderSide>(BorderSide.none)),
+                      WidgetStateProperty.all<Color>(Constants.kGreyColor),
+                  side: WidgetStateProperty.all<BorderSide>(BorderSide.none)),
             ),
           )
         : CircularProgressIndicator();
@@ -69,8 +69,8 @@ class _SignInButtonState extends State<SignInButton> {
                         .fetchSignInMethodsForEmail(e.email!);
                     if (emailList.first == "google.com") {
                       await this.service.signInwithGoogle(true, e.credential);
-                              Navigator.pushNamedAndRemoveUntil(
-            context, Constants.homeNavigate, (route) => false);
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, Constants.homeNavigate, (route) => false);
                     }
                   }
                 },

@@ -33,8 +33,12 @@ class SignInPage extends StatelessWidget {
             Constants.textSmallSignIn,
             style: TextStyle(color: Constants.kDarkGreyColor),
           ),
-          SignInButton(loginType: LoginType.Google,faIcon: FaIcon(FontAwesomeIcons.google)),
-          SignInButton(loginType: LoginType.Twitter,faIcon: FaIcon(FontAwesomeIcons.twitter)),
+          SignInButton(
+              loginType: LoginType.Google,
+              faIcon: FaIcon(FontAwesomeIcons.google)),
+          SignInButton(
+              loginType: LoginType.Twitter,
+              faIcon: FaIcon(FontAwesomeIcons.twitter)),
           buildRowDivider(size: size),
           Padding(padding: EdgeInsets.only(bottom: size.height * 0.02)),
           SizedBox(
@@ -75,10 +79,10 @@ class SignInPage extends StatelessWidget {
               child: Text(Constants.textSignIn),
               style: ButtonStyle(
                   foregroundColor:
-                      MaterialStateProperty.all<Color>(Constants.kPrimaryColor),
+                      WidgetStateProperty.all<Color>(Constants.kPrimaryColor),
                   backgroundColor:
-                      MaterialStateProperty.all<Color>(Constants.kBlackColor),
-                  side: MaterialStateProperty.all<BorderSide>(BorderSide.none)),
+                      WidgetStateProperty.all<Color>(Constants.kBlackColor),
+                  side: WidgetStateProperty.all<BorderSide>(BorderSide.none)),
             ),
           ),
           RichText(

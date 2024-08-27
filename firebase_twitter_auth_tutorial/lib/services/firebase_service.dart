@@ -30,7 +30,8 @@ class FirebaseService {
     }
   }
 
-  Future<UserCredential?> linkProviders(UserCredential userCredential, AuthCredential newCredential) async {
+  Future<UserCredential?> linkProviders(
+      UserCredential userCredential, AuthCredential newCredential) async {
     return await userCredential.user!.linkWithCredential(newCredential);
   }
 
@@ -49,8 +50,7 @@ class FirebaseService {
                 accessToken: authResult.authToken!,
                 secret: authResult.authTokenSecret!);
 
-        final userCredential =
-            await _auth.signInWithCredential(twitterAuthCredential);
+        await _auth.signInWithCredential(twitterAuthCredential);
         return Resource(status: Status.Success);
       case TwitterLoginStatus.cancelledByUser:
         return Resource(status: Status.Cancelled);
