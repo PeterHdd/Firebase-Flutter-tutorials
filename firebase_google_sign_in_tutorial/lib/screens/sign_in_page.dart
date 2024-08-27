@@ -74,10 +74,10 @@ class SignInPage extends StatelessWidget {
               child: Text(Constants.textSignIn),
               style: ButtonStyle(
                   foregroundColor:
-                      MaterialStateProperty.all<Color>(Constants.kPrimaryColor),
+                      WidgetStateProperty.all<Color>(Constants.kPrimaryColor),
                   backgroundColor:
-                      MaterialStateProperty.all<Color>(Constants.kBlackColor),
-                  side: MaterialStateProperty.all<BorderSide>(BorderSide.none)),
+                      WidgetStateProperty.all<Color>(Constants.kBlackColor),
+                  side: WidgetStateProperty.all<BorderSide>(BorderSide.none)),
             ),
           ),
           RichText(
@@ -128,38 +128,41 @@ class _GoogleSignInState extends State<GoogleSignIn> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return  !isLoading? SizedBox(
-      width: size.width * 0.8,
-      child: OutlinedButton.icon(
-        icon: FaIcon(FontAwesomeIcons.google),
-        onPressed: () async {
-          setState(() {
-            isLoading = true;
-          });
-          FirebaseService service = new FirebaseService();
-          try {
-           await service.signInwithGoogle();
-           Navigator.pushNamedAndRemoveUntil(context, Constants.homeNavigate, (route) => false);
-          } catch(e){
-            if(e is FirebaseAuthException){
-              showMessage(e.message!);
-            }
-          }
-          setState(() {
-            isLoading = false;
-          });
-        },
-        label: Text(
-          Constants.textSignInGoogle,
-          style: TextStyle(
-              color: Constants.kBlackColor, fontWeight: FontWeight.bold),
-        ),
-        style: ButtonStyle(
-            backgroundColor:
-                MaterialStateProperty.all<Color>(Constants.kGreyColor),
-            side: MaterialStateProperty.all<BorderSide>(BorderSide.none)),
-      ),
-    ) : CircularProgressIndicator();
+    return !isLoading
+        ? SizedBox(
+            width: size.width * 0.8,
+            child: OutlinedButton.icon(
+              icon: FaIcon(FontAwesomeIcons.google),
+              onPressed: () async {
+                setState(() {
+                  isLoading = true;
+                });
+                FirebaseService service = new FirebaseService();
+                try {
+                  await service.signInwithGoogle();
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, Constants.homeNavigate, (route) => false);
+                } catch (e) {
+                  if (e is FirebaseAuthException) {
+                    showMessage(e.message!);
+                  }
+                }
+                setState(() {
+                  isLoading = false;
+                });
+              },
+              label: Text(
+                Constants.textSignInGoogle,
+                style: TextStyle(
+                    color: Constants.kBlackColor, fontWeight: FontWeight.bold),
+              ),
+              style: ButtonStyle(
+                  backgroundColor:
+                      WidgetStateProperty.all<Color>(Constants.kGreyColor),
+                  side: WidgetStateProperty.all<BorderSide>(BorderSide.none)),
+            ),
+          )
+        : CircularProgressIndicator();
   }
 
   void showMessage(String message) {

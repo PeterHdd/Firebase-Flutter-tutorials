@@ -4,7 +4,6 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:twitter_login/twitter_login.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
-
 class FirebaseService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
@@ -32,7 +31,8 @@ class FirebaseService {
     }
   }
 
-  Future<UserCredential?> linkProviders(UserCredential userCredential, AuthCredential newCredential) async {
+  Future<UserCredential?> linkProviders(
+      UserCredential userCredential, AuthCredential newCredential) async {
     return await userCredential.user!.linkWithCredential(newCredential);
   }
 
@@ -50,9 +50,7 @@ class FirebaseService {
             TwitterAuthProvider.credential(
                 accessToken: authResult.authToken!,
                 secret: authResult.authTokenSecret!);
-
-        final userCredential =
-            await _auth.signInWithCredential(twitterAuthCredential);
+        await _auth.signInWithCredential(twitterAuthCredential);
         return Resource(status: Status.Success);
       case TwitterLoginStatus.cancelledByUser:
         return Resource(status: Status.Cancelled);
@@ -63,24 +61,23 @@ class FirebaseService {
     }
   }
 
-    Future<Resource?> signInWithFacebook() async {
-      try {
+  Future<Resource?> signInWithFacebook() async {
+    try {
       final LoginResult result = await FacebookAuth.instance.login();
-    switch (result.status) {
-      case LoginStatus.success:
-        final AuthCredential facebookCredential =
-            FacebookAuthProvider.credential(result.accessToken!.token);
-        final userCredential =
-            await _auth.signInWithCredential(facebookCredential);
-        return Resource(status: Status.Success);
-      case LoginStatus.cancelled:
-        return Resource(status: Status.Cancelled);
-      case LoginStatus.failed:
-        return Resource(status: Status.Error);
-      default:
-        return null;
+      switch (result.status) {
+        case LoginStatus.success:
+          final AuthCredential facebookCredential =
+              FacebookAuthProvider.credential(result.accessToken!.tokenString);
+          await _auth.signInWithCredential(facebookCredential);
+          return Resource(status: Status.Success);
+        case LoginStatus.cancelled:
+          return Resource(status: Status.Cancelled);
+        case LoginStatus.failed:
+          return Resource(status: Status.Error);
+        default:
+          return null;
       }
-      } on FirebaseAuthException catch (e) {
+    } on FirebaseAuthException catch (e) {
       throw e;
     }
   }

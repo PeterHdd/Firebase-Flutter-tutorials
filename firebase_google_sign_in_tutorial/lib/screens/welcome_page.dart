@@ -58,11 +58,11 @@ class WelcomePage extends StatelessWidget {
                     },
                     child: Text(Constants.textStart),
                     style: ButtonStyle(
-                        foregroundColor: MaterialStateProperty.all<Color>(
+                        foregroundColor: WidgetStateProperty.all<Color>(
                             Constants.kPrimaryColor),
-                        backgroundColor: MaterialStateProperty.all<Color>(
+                        backgroundColor: WidgetStateProperty.all<Color>(
                             Constants.kBlackColor),
-                        side: MaterialStateProperty.all<BorderSide>(
+                        side: WidgetStateProperty.all<BorderSide>(
                             BorderSide.none)),
                   ),
                 ),
@@ -75,9 +75,9 @@ class WelcomePage extends StatelessWidget {
                       style: TextStyle(color: Constants.kBlackColor),
                     ),
                     style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(
+                        backgroundColor: WidgetStateProperty.all<Color>(
                             Constants.kGreyColor),
-                        side: MaterialStateProperty.all<BorderSide>(
+                        side: WidgetStateProperty.all<BorderSide>(
                             BorderSide.none)),
                   ),
                 )
