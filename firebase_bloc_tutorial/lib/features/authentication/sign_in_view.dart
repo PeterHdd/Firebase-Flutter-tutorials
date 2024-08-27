@@ -174,12 +174,12 @@ class _SubmitButton extends StatelessWidget {
                       : null,
                   child: const Text(Constants.textSignIn),
                   style: ButtonStyle(
-                      foregroundColor: MaterialStateProperty.all<Color>(
+                      foregroundColor: WidgetStateProperty.all<Color>(
                           Constants.kPrimaryColor),
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                          Constants.kBlackColor),
-                      side: MaterialStateProperty.all<BorderSide>(
-                          BorderSide.none)),
+                      backgroundColor:
+                          WidgetStateProperty.all<Color>(Constants.kBlackColor),
+                      side:
+                          WidgetStateProperty.all<BorderSide>(BorderSide.none)),
                 ),
               );
       },
