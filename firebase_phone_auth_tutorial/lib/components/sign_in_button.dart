@@ -5,13 +5,16 @@ import 'package:firebase_phone_auth_tutorial/utils/resource.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-
 class SignInButton extends StatefulWidget {
   final FaIcon faIcon;
   final LoginType loginType;
   final textLabel;
 
-  SignInButton({Key? key, required this.faIcon, required this.loginType,required this.textLabel})
+  SignInButton(
+      {Key? key,
+      required this.faIcon,
+      required this.loginType,
+      required this.textLabel})
       : super(key: key);
 
   @override
@@ -45,8 +48,8 @@ class _SignInButtonState extends State<SignInButton> {
               ),
               style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateProperty.all<Color>(Constants.kGreyColor),
-                  side: MaterialStateProperty.all<BorderSide>(BorderSide.none)),
+                      WidgetStateProperty.all<Color>(Constants.kGreyColor),
+                  side: WidgetStateProperty.all<BorderSide>(BorderSide.none)),
             ),
           )
         : CircularProgressIndicator();
@@ -67,10 +70,11 @@ class _SignInButtonState extends State<SignInButton> {
                   if (e.code == 'account-exists-with-different-credential') {
                     List<String> emailList = await FirebaseAuth.instance
                         .fetchSignInMethodsForEmail(e.email!);
-                    if (emailList.first == "google.com" || emailList.first == "twitter.com") {
+                    if (emailList.first == "google.com" ||
+                        emailList.first == "twitter.com") {
                       await this.service.signInwithGoogle(true, e.credential);
-                              Navigator.pushNamedAndRemoveUntil(
-            context, Constants.verifyOtp, (route) => false);
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, Constants.verifyOtp, (route) => false);
                     }
                   }
                 },
@@ -92,7 +96,7 @@ class _SignInButtonState extends State<SignInButton> {
           result = await service.signInWithTwitter();
           break;
         case LoginType.Facebook:
-         result = await service.signInWithFacebook();
+          result = await service.signInWithFacebook();
           break;
       }
       if (result!.status == Status.Success || displayName != null) {
